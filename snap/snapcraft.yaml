@@ -17,6 +17,7 @@ parts:
     source-branch: master
     build-packages:
       - python3-virtualenv
+      - libcrypt-dev
     override-build: |
       virtualenv .venv
       source .venv/bin/activate
@@ -40,6 +41,7 @@ parts:
       cp config/waagent.conf "${CRAFT_PART_INSTALL}/etc/"
 
     stage-packages:
+      - python3
       - openssh-server
       - openssl
       - iproute2
@@ -76,10 +78,10 @@ plugs:
 
 apps:
   waagent:
-    command: bin/waagent -daemon -configuration-path:$SNAP/etc/waagent.conf
+    command: usr/bin/python3 $SNAP/bin/waagent -daemon -configuration-path:$SNAP/etc/waagent.conf
     daemon: simple
     environment:
-      PYTHONPATH: $SNAP/lib/python3.12/site-packages
+      PYTHONPATH: $SNAP/lib/python3.14/site-packages
     plugs:
       # to communicate with the control plan
       - sys-bus-vmbus-devices
