@@ -134,6 +134,10 @@ plugs:
     interface: system-files
     write:
       - "/sys/devices/LNXSYSTM:00"
+  tpm-event-log:
+    interface: system-files
+    read:
+      - "/sys/kernel/security/tpm0/binary_bios_measurements"
 
 apps:
   waagent:
@@ -162,3 +166,6 @@ apps:
       - network-bind
       - network-observe
       - hardware-observe
+      - tpm
+      - tpm-event-log
+
